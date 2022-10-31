@@ -1,0 +1,3 @@
+atcoder-tools==2.12.0
+# https://github.com/kyuridenamida/atcoder-tools/issues/263
+MarkupSafe==2.0.1
