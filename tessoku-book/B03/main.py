@@ -6,6 +6,13 @@ NO = "No"  # type: str
 
 
 def solve(N: int, A: "List[int]"):
+    for a1 in A:
+        for a2 in A:
+            for a3 in A:
+                if a1 + a2 + a3 == 1000 and ((a1 != a2) and (a2 != a3) and (a3 != a1)):
+                    print(YES)
+                    return
+    print(NO)
     return
 
 

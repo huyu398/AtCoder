@@ -3,6 +3,10 @@ import sys
 
 
 def solve(N: int):
+    n = 0
+    for i, d in enumerate(reversed(str(N))):
+        n += 2 ** i * int(d)
+    print(n)
     return
 
 

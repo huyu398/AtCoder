@@ -6,6 +6,12 @@ NO = "No"  # type: str
 
 
 def solve(N: int, K: int, P: "List[int]", Q: "List[int]"):
+    for p in P:
+        for q in Q:
+            if p + q == K:
+                print(YES)
+                return
+    print(NO)
     return
 
 

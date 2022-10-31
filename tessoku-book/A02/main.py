@@ -6,6 +6,7 @@ NO = "No"  # type: str
 
 
 def solve(N: int, X: int, A: "List[int]"):
+    print(YES if X in A else NO)
     return
 
 

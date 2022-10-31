@@ -6,6 +6,11 @@ NO = "No"  # type: str
 
 
 def solve(A: int, B: int):
+    for n in range(A, B+1):
+        if 100 % n == 0:
+            print(YES)
+            return
+    print(NO)
     return
 
 

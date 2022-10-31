@@ -3,6 +3,13 @@ import sys
 
 
 def solve(N: int):
+    b = 0
+    d = 0
+    while N:
+        b += (N % 2) * 10 ** d
+        N //= 2
+        d += 1
+    print(f'{b:010d}')
     return
 
 
