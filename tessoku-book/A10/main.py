@@ -1,8 +1,22 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
+from itertools import accumulate
 
+import numpy as np
 
 def solve(N: int, A: "List[int]", D: int, L: "List[int]", R: "List[int]"):
+    # index が昇順での A の最大値を累積的に求める
+    ascend_max_A = tuple(accumulate(A, func=max))
+    # index が降順での A の最大値を累積的に求める
+    descend_max_A = tuple(accumulate(A[::-1], func=max))[::-1]
+
+    # L,R の各ペアを範囲外とした場合の A の最大値を求める
+    for l, r in zip(L, R):
+        # 範囲外を除いた A の最大値を求める
+        max_A = max(ascend_max_A[l-2], descend_max_A[r])
+        print(max_A)
+
     return
 
 

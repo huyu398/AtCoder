@@ -1,8 +1,23 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
 
+import numpy as np
 
 def solve(N: int, A: "List[int]", B: "List[int]", C: "List[int]", D: "List[int]"):
+    MAX_SIZE = 1501
+    plane = np.zeros((MAX_SIZE, MAX_SIZE), dtype=np.int64)
+    for a, b, c, d in zip(A, B, C, D):
+        plane[a, b] += 1
+        plane[a, d] -= 1
+        plane[c, b] -= 1
+        plane[c, d] += 1
+
+    cumulative_plane = plane.cumsum(axis=0).cumsum(axis=1)
+
+    # 1 以上になっている要素の個数をカウントする
+    print(np.count_nonzero(cumulative_plane >= 1))
+
     return
 
 

@@ -3,6 +3,20 @@ import sys
 
 
 def solve(D: int, N: int, L: "List[int]", R: "List[int]"):
+    attendee_diffs = [0] * (D+1)
+    for l, r in zip(L, R):
+        attendee_diffs[l-1] += 1
+        attendee_diffs[r] -= 1
+
+    day_attendees = [0]
+    for i, diff in enumerate(attendee_diffs):
+        day_attendees.append(day_attendees[i] + diff)
+    day_attendees.pop(0)
+    day_attendees.pop()
+
+    for attendees in day_attendees:
+        print(attendees)
+
     return
 
 

@@ -3,6 +3,20 @@ import sys
 
 
 def solve(T: int, N: int, L: "List[int]", R: "List[int]"):
+    staff_diffs = [0] * (T+1)
+    for l, r in zip(L, R):
+        staff_diffs[l] += 1
+        staff_diffs[r] -= 1
+
+    hour_staffs = [0]
+    for i, diff in enumerate(staff_diffs):
+        hour_staffs.append(hour_staffs[i] + diff)
+    hour_staffs.pop(0)
+    hour_staffs.pop()
+
+    for staff in hour_staffs:
+        print(staff)
+
     return
 
 

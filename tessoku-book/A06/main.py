@@ -3,6 +3,14 @@ import sys
 
 
 def solve(N: int, Q: int, A: "List[int]", L: "List[int]", R: "List[int]"):
+    # 引き算しやすいように 0 日目から配列を作る
+    cumulative_A = [0]
+    for i, a in enumerate(A):
+        cumulative_A.append(cumulative_A[i] + a)
+
+    for l, r in zip(L, R):
+        print(cumulative_A[r] - cumulative_A[l-1])
+
     return
 
 

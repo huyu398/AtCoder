@@ -1,8 +1,40 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
 
+import numpy as np
 
 def solve(N: int, X: "List[int]", Y: "List[int]", Q: int, a: "List[int]", b: "List[int]", c: "List[int]", d: "List[int]"):
+    MAX_SIZE = 1501
+    # plane = [[0]*MAX_SIZE for _ in range(MAX_SIZE)]
+    plane = np.zeros((MAX_SIZE, MAX_SIZE), dtype=int)
+    for x, y in zip(X, Y):
+        plane[x, y] += 1
+
+    cumulative_plane = plane.cumsum(axis=0).cumsum(axis=1)
+    # plane = np.zeros((MAX_SIZE, MAX_SIZE))
+    # for i in range(1, MAX_SIZE):
+    #     for j in range(1, MAX_SIZE):
+    #         plane[i][j] = plane[i][j-1] + plane[i-1][j] + plane[i][j]
+    # for i in range(1, MAX_SIZE):
+    #     for j in range(1, MAX_SIZE):
+    #         plane[i][j] = plane[i-1][j] + plane[i][j]
+
+    # print('plane')
+    # for p in plane:
+    #     print(p)
+    # print('cumulative_plane')
+    # for p in cumulative_plane:
+    #     print(p)
+
+    for x1, y1, x2, y2 in zip(a, b, c, d):
+        print(
+            cumulative_plane[x1-1, y1-1]
+                - cumulative_plane[x1-1, y2]
+                - cumulative_plane[x2, y1-1]
+                + cumulative_plane[x2, y2]
+        )
+
     return
 
 

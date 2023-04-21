@@ -1,8 +1,23 @@
 #!/usr/bin/env python3
 import sys
+from itertools import accumulate
 
 
 def solve(N: int, A: "List[int]", Q: int, L: "List[int]", R: "List[int]"):
+    cumulative_A = [0]
+    for i, a in enumerate(A):
+        cumulative_A.append(cumulative_A[i] + a)
+
+    for l, r in zip(L, R):
+        trial_count = r - (l-1)
+        hit_count = cumulative_A[r] - cumulative_A[l-1]
+        if   hit_count >  trial_count / 2:
+            print('win')
+        elif hit_count == trial_count / 2:
+            print('draw')
+        else:
+            print('lose')
+
     return
 
 

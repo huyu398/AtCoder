@@ -1,8 +1,26 @@
 #!/usr/bin/env python3
 import sys
 
+from typing import List
 
 def solve(H: int, W: int, X: "List[List[int]]", Q: int, A: "List[int]", B: "List[int]", C: "List[int]", D: "List[int]"):
+    cumulative_X = [[0] * (W+1)]
+    for x_w in X:
+        cumulative_X_w = [0]
+        for j, x in enumerate(x_w):
+            cumulative_X_w.append(cumulative_X_w[j] + x)
+        cumulative_X.append(cumulative_X_w)
+
+    for i, cumulative_x_w in enumerate(cumulative_X[:-1], 1):
+        for j, _ in enumerate(cumulative_x_w[:-1], 1):
+            cumulative_X[i][j] += cumulative_X[i-1][j]
+
+    # for tmp in cumulative_X:
+    #     print(tmp)
+
+    for a, b, c, d in zip(A, B, C, D):
+        print(cumulative_X[a-1][b-1] - cumulative_X[c][b-1] - cumulative_X[a-1][d] + cumulative_X[c][d])
+
     return
 
 

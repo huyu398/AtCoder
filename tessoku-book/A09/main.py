@@ -1,8 +1,26 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
 
+import numpy as np
 
 def solve(H: int, W: int, N: int, A: "List[int]", B: "List[int]", C: "List[int]", D: "List[int]"):
+    # 積雪範囲の記録に HxW の二次元配列を用意する
+    plane = np.zeros((H+1, W+1), dtype=np.int64)
+    for a, b, c, d in zip(A, B, C, D):
+        # 積雪範囲の増減分を記録する
+        plane[a-1, b-1] += 1
+        plane[a-1, d] -= 1
+        plane[c, b-1] -= 1
+        plane[c, d] += 1
+
+    # 二次元の累積和を計算する
+    cumulative_plane = plane.cumsum(axis=0).cumsum(axis=1)
+
+    # 二次元の累積和を出力する
+    for row in cumulative_plane[:-1]:
+        print(' '.join(map(str, row[:-1])))
+
     return
 
 
