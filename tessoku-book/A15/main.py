@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
+import bisect
 
+# 要素 a が配列 A の中で何番目に小さいかを二分探索で求める
+def binary_search(A: "List[int]", a: int):
+    index = bisect.bisect_left(A, a)
+    return index
 
 def solve(N: int, A: "List[int]"):
+    # A を昇順にソートする
+    sorted_A = sorted(set(A))
+    # 圧縮した配列 B を求める
+    B = [binary_search(sorted_A, a)+1 for a in A]
+    print(*B)
     return
 
 

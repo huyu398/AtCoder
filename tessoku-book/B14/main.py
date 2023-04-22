@@ -1,10 +1,34 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
+import itertools
+import bisect
 
 YES = "Yes"  # type: str
-
+NO = "No"  # type: str
 
 def solve(N: int, K: int, A: "List[int]"):
+    # リストを N/2 個ずつに分ける
+    P = A[:N//2]
+    Q = A[N//2:]
+    # P,Q それぞれで組み合わせの和を求める
+    P_comb = [sum(p) for n in range(len(P)+1) for p in itertools.combinations(P, n)]
+    Q_comb = [sum(q) for n in range(len(Q)+1) for q in itertools.combinations(Q, n)]
+    # 組み合わせ和をソートする
+    sorted_P_comb = sorted(P_comb)
+    sorted_Q_comb = sorted(Q_comb)
+
+    # 組み合わせ和の合計が K となる組み合わせが存在するかを判定する
+    for p in sorted_P_comb:
+        # 組み合わせ和の合計が K となる組み合わせを求める
+        index = bisect.bisect_left(sorted_Q_comb, K - p)
+        # 組み合わせが存在する場合
+        if index < len(sorted_Q_comb) and sorted_Q_comb[index] == K - p:
+            print(YES)
+            break
+    else:
+        print(NO)
+
     return
 
 

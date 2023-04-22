@@ -1,8 +1,29 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
 
+# A の各要素 a 秒ごとの処理を行ったとき、
+# t 秒時点で K 回以上の処理が行われているかどうかを判定する
+def check(K: int, A: "List[int]", t: int):
+    # A の各要素 a について、t // a 回の処理が行われている
+    # これらの和が K 以上であれば True を返す
+    return sum([t // a for a in A]) >= K
 
 def solve(N: int, K: int, A: "List[int]"):
+    # 二分探索で K 回以上の処理が行われる最小の t を求める
+    # 二分探索の終了条件は、check(K, A, t) が True となる最小の t が見つかったとき
+    left = 0
+    right = 10 ** 9 + 1
+    mid = (left + right) // 2
+    while right - left > 1:
+        if check(K, A, mid):
+            right = mid
+        else:
+            left = mid
+        mid = (left + right) // 2
+
+    print(right)
+
     return
 
 

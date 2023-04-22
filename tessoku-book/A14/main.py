@@ -1,10 +1,30 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
+import itertools
+import bisect
 
 YES = "Yes"  # type: str
-
+NO = "No"  # type: str
 
 def solve(N: int, K: int, A: "List[int]", B: "List[int]", C: "List[int]", D: "List[int]"):
+    # A と B, C と D の組み合わせ和を全て試す
+    P = [a + b for a, b in itertools.product(A, B)]
+    Q = [c + d for c, d in itertools.product(C, D)]
+    # 組み合わせ和をソートする
+    sorted_P = sorted(P)
+    sorted_Q = sorted(Q)
+    # 組み合わせ和の合計が K となる組み合わせが存在するかを判定する
+    for p in sorted_P:
+        # 組み合わせ和の合計が K となる組み合わせを求める
+        index = bisect.bisect_left(sorted_Q, K - p)
+        # 組み合わせが存在する場合
+        if index < len(sorted_Q) and sorted_Q[index] == K - p:
+            print(YES)
+            break
+    else:
+        print(NO)
+
     return
 
 

@@ -1,8 +1,71 @@
 #!/usr/bin/env python3
 import sys
+from typing import List
+import bisect
 
+# A の要素 a1 と a2 の差が K 以下かどうかを判定する
+def check(K: int, a1: int, a2: int):
+    return abs(a1 - a2) <= K
+
+# 尺取法を使った解法
+def solve3(N: int, K: int, A: "List[int]"):
+    # 差が K 以下となる組み合わせの数
+    ans = 0
+    # 要素との差が K 以下となる要素のインデックス
+    idx = 0
+    # A の先頭要素から順番に比較する
+    for i, a1 in enumerate(A[:-1]):
+        # a1 と異なる要素が見つかるまで i を大きくする
+        while i < len(A) - 1 and A[i] == a1:
+            i += 1
+        # i より大きい範囲で差が K 以下となる値を二分探索で求める
+        while idx < len(A) - 1 and check(K, a1, A[idx + 1]):
+            idx += 1
+        ans += idx - i + 1
+        # print(i, idx)
+
+    print(ans)
+
+# bisect を使った解法
+def solve2(N: int, K: int, A: "List[int]"):
+    # 差が K 以下となる組み合わせの数
+    ans = 0
+    # A の先頭要素から順番に比較する
+    for i, a1 in enumerate(A):
+        # a1 と異なる要素が見つかるまで i を大きくする
+        while i < len(A) - 1 and A[i] == a1:
+            i += 1
+        # i より大きい範囲で差が K 以下となる値を二分探索で求める
+        index = bisect.bisect_right(A, a1 + K, i)
+        if a1 != A[index-1]:
+            ans += index - i
+
+    print(ans)
 
 def solve(N: int, K: int, A: "List[int]"):
+    # 差が K 以下となる組み合わせの数
+    ans = 0
+    # A の先頭要素から順番に比較する
+    for i, a1 in enumerate(A):
+        # a1 と異なる要素が見つかるまで i を大きくする
+        while i < len(A) - 1 and A[i] == a1:
+            i += 1
+        # i より大きい範囲で差が K 以下となる値を二分探索で求める
+        left = i
+        right = len(A)
+        mid = (left + right) // 2
+        while right - left > 1:
+            if check(K, a1, A[mid]):
+                left = mid
+            else:
+                right = mid
+            mid = (left + right) // 2
+        # 差が K 以下となる値が見つかった場合、Yes を出力して終了
+        if a1 != A[mid] and check(K, a1, A[mid]):
+            ans += right - i
+
+    print(ans)
+
     return
 
 
@@ -16,7 +79,7 @@ def main():
     N = int(next(tokens))  # type: int
     K = int(next(tokens))  # type: int
     A = [int(next(tokens)) for _ in range(N)]  # type: "List[int]"
-    solve(N, K, A)
+    solve3(N, K, A)
 
 if __name__ == '__main__':
     main()

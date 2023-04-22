@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 import sys
-
+from typing import List
+import bisect
 
 def solve(N: int, A: "List[int]", Q: int, X: "List[int]"):
+    # A を昇順にソートする
+    sorted_A = sorted(A)
+    # x よりも小さい要素が A にいくつあるか求める
+    for x in X:
+        # 二分探索で x 以上の最小の要素の index を求める
+        index = bisect.bisect_left(sorted_A, x)
+        print(index)
+
     return
 
 
